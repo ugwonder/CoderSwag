@@ -14,8 +14,10 @@
         android:layout_marginTop="16dp"
         android:text="Categories"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:divider="@null"/>
 
     <ListView
         android:id="@+id/categoryListView"
