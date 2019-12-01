@@ -1,5 +1,6 @@
 package com.mgbachi_ugo.coderswag.Controller
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -18,9 +19,14 @@ class ProductActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product)
-
         val categoryType = intent.getStringExtra(EXTRA_CATEGORY)
-        adapter = ProductAdapter(this, DataService.getProduct(categoryType))
+        productCategoryName.text = "Products - $categoryType"
+
+        adapter = ProductAdapter(this, DataService.getProduct(categoryType)) {
+            val buyIntent = Intent(this, BuyActivity::class.java)
+            buyIntent.putExtra(EXTRA_CATEGORY, categoryType)
+            startActivity(buyIntent)
+        }
 
         var spanCount = 2
         val orientation = resources.configuration.orientation
@@ -31,17 +37,9 @@ class ProductActivity : AppCompatActivity() {
         if (screenSize > 720) {
             spanCount = 3
         }
-
         val layoutManager = GridLayoutManager(this, spanCount)
         productListView.layoutManager = layoutManager
         productListView.adapter = adapter
-
-
-
-
-
-
-
-
     }
 }
+
