@@ -6,15 +6,18 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mgbachi_ugo.coderswag.Adapter.ProductAdapter
+import com.mgbachi_ugo.coderswag.Model.UnitProduct
 import com.mgbachi_ugo.coderswag.R
 import com.mgbachi_ugo.coderswag.Services.DataService
 import com.mgbachi_ugo.coderswag.Utilities.EXTRA_CATEGORY
+import com.mgbachi_ugo.coderswag.Utilities.EXTRA_UNITPRODUCT
 import kotlinx.android.synthetic.main.activity_product.*
 
-@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class ProductActivity : AppCompatActivity() {
 
+
+class ProductActivity : AppCompatActivity() {
     lateinit var adapter : ProductAdapter
+    var unitProduct = UnitProduct("", "", "", "")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,11 +25,16 @@ class ProductActivity : AppCompatActivity() {
         val categoryType = intent.getStringExtra(EXTRA_CATEGORY)
         productCategoryName.text = "Products - $categoryType"
 
-        adapter = ProductAdapter(this, DataService.getProduct(categoryType)) {
+        adapter = ProductAdapter(this, DataService.getProduct(categoryType)) {product ->
+            unitProduct.title = product.title
+            unitProduct.price = product.price
+            unitProduct.image = product.image
+            unitProduct.cat = categoryType
             val buyIntent = Intent(this, BuyActivity::class.java)
-            buyIntent.putExtra(EXTRA_CATEGORY, categoryType)
+            buyIntent.putExtra(EXTRA_UNITPRODUCT, unitProduct)
             startActivity(buyIntent)
         }
+
 
         var spanCount = 2
         val orientation = resources.configuration.orientation
@@ -42,4 +50,5 @@ class ProductActivity : AppCompatActivity() {
         productListView.adapter = adapter
     }
 }
+
 

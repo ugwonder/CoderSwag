@@ -32,8 +32,7 @@ class ProductAdapter(val context: Context, val products: List<Product>, val item
         val productPrice = itemView?.findViewById<TextView>(R.id.productPrice)
 
         fun bindProduct(product: Product, context: Context) {
-            val resourceId =
-                context.resources.getIdentifier(product.image, "drawable", context.packageName)
+            val resourceId = context.resources.getIdentifier(product.image, "drawable", context.packageName)
             productImage?.setImageResource(resourceId)
             productName?.text = product.title
             productPrice?.text = product.price
