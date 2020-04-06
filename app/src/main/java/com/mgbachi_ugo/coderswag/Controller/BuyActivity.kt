@@ -19,6 +19,10 @@ class BuyActivity : AppCompatActivity() {
         setContentView(R.layout.activity_buy)
 
         val product = intent.getParcelableExtra<UnitProduct>(EXTRA_UNITPRODUCT)
+
+        val resourceId = resources.getIdentifier(product.image, "drawable", packageName)
+        buyproductImage?.setImageResource(resourceId)
+
         buyProductName.text = "${product.cat} - ${product.title}"
         productdetails.text = "${product.title} ${product.price} "
 
